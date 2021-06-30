@@ -7,17 +7,17 @@ Matrix multiplication is the mathematical operation that defines product of two 
 
 ```math
 	
-	C(m, n) = A(m, k) * B(k, n)
+	P(i, j) = M(i, k) * N(k, j)
 
 ```
 
-It is implemented as the dot product between the row of matrix A and the column of matrix B. The `naive implementation` in C is:
+It is implemented as the dot product between the row of matrix M and the column of matrix N. The `naive implementation` in P is:
 
 ```C
-	for (int i = 0; i < m; i++){
-		for (int j = 0; j < n; j++){
-			for (int r = 0; r < k; r++){
-				C(i, j) += A(i, r) * B(r, j);
+	for (int i = 0; i < Width; i++){
+		for (int j = 0; j < Width; j++){
+			for (int k = 0; k < Width; k++){
+				P(i, j) += M(i, k) * N(k, j);
 			}
 		}
 	}
