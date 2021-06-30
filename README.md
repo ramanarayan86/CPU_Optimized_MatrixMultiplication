@@ -23,6 +23,7 @@ It is implemented as the dot product between the row of matrix A and the column 
 	}
 ```
 
+![Naive Matrix Multiplication](/figures/mm_naive.png)
 
 ## CPU Performance Analysis
 
@@ -77,6 +78,6 @@ In the matrix multiplication task, two matrices of size `n x n` perform two oper
 On this machine the naive algorithm takes around `3.45` second i.e. about `2 * 1024^3 / 3.45 / 1e9 = 0.622` GFlops/sec. Its approximately `(0.622/ 153) * 100 = 0.4%` utilization of the peak performance of the processor. 
 
 
-![Naive Matrix Multiplication](/figures/mm_naive.png)
+
 
 
