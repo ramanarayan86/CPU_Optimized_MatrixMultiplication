@@ -24,11 +24,11 @@ It is implemented as the dot product between the row of matrix A and the column 
 ```
 
 
-## CPU Performance Metrics
+## CPU Performance Analysis
 
 The naive implementation of the matrix multiplication is very inefficient. How would we measure the efficiency of the Matrix multiplication? The performance of the matrix multiplication is measured with respect to the CPU machine peak performance. Then question arises what is the CPU machine peak and how would we compute it? 
 
-* First determine the CPU machine peak perfomance:
+* First determine the CPU machine peak perfomance in floating point operations per second (flops/sec):
 
 	- Let's consider the case for `Intel Cascade Lake processor with AVX3 enabled`
 
@@ -47,17 +47,33 @@ The naive implementation of the matrix multiplication is very inefficient. How w
  The AVX clock frequency can be determined by this C code:
 
  ```C
- 	
- 	int64_t procf = 1;
-    int64_t startTick = __rdtsc();
-    sleep(1);
-    int64_t endTick = __rdtsc();
-    procf = endTick - startTick;
-    printf("procf = %ld\n", procf);
-
+	int64_t procf = 1;
+	int64_t startTick = __rdtsc();
+	sleep(1);
+	int64_t endTick = __rdtsc();
+	proc_eff = endTick - startTick;
+	printf("procf = %ld\n", procf);
  ```
 
+* Determine the performance of the Matrix Multiplication
 
+In the matrix multiplication task, two matrices of size `n x n` perform two operations of `multiplication and addition` among the elements. Hence, the total number of computes involved are `2 * n ^ 3`. For a `1024 x 1024` matrix the number of compute is `2 * 1024 ^ 3`, which is about to 2.1 Giga-flops. So ideally we should able to perform about 72 `1024 x 1024` multiplications per second per core if our code is 100% efficient and the program is not memory bound. 
+
+On this machine the naive algorithm takes around `3.45` second i.e. about `2 * 1024^3 / 3.45 / 1e9 = 0.622` GFlops/sec. Its approximately `(0.622/ 153) * 100 = 0.4%` utilization of the peak performance of the processor. 
+
+```C
+	int64_t startTick = __rdtsc();
+
+	/* Matrix Multiplication Code*/
+	
+	int64_t endTick1 = __rdtsc();
+	uint64_t tot_ticks =  endTick1 - startTick1;
+    double total_time = tot_ticks*1.0/proc_eff;
+    float mm_comp_freq =  2.0 * M * N * K / (total_time);
+    printf(" GFLOPS for MM  %0.2lf \n", mm_comp_freq / 1e9 );
+    float Effy_wrt_peak = mm_comp_freq / 153 / 1e9 ; 
+    printf(" Efficiency wrt Peak %0.2lf \n", Effy_wrt_peak );  
+```
 
 
 
