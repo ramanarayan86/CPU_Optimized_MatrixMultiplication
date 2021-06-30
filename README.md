@@ -77,6 +77,6 @@ In the matrix multiplication task, two matrices of size `n x n` perform two oper
 On this machine the naive algorithm takes around `3.45` second i.e. about `2 * 1024^3 / 3.45 / 1e9 = 0.622` GFlops/sec. Its approximately `(0.622/ 153) * 100 = 0.4%` utilization of the peak performance of the processor. 
 
 
-![Screenshot](/figures/mm_naive.png)
+![Naive Matrix Multiplication](/figures/mm_naive.png)
 
 
