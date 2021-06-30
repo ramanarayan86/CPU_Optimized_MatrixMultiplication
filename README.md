@@ -28,9 +28,22 @@ It is implemented as the dot product between the row of matrix A and the column 
 
 The naive implementation of the matrix multiplication is very inefficient. How would we measure the efficiency of the Matrix multiplication? The performance of the matrix multiplication is measured with respect to the CPU machine peak performance. Then question arises what is the CPU machine peak and how would we determine it? 
 
-* Let's first determine the CPU machine peak perfomance:
+* First determine the CPU machine peak perfomance:
 
-Let's consider the case for `Intel Cascade Lake processor`
+	- Let's consider the case for `Intel Cascade Lake processor with AVX3 enabled`
+
+	- Cascade Lake has `2 Sockets` and each socket has `28 cores`
+
+	- The AVX clock frequecy of the cascade lake is `2.4 * 10^9 cylces/sec` or `2.4 GHz`
+
+	- This processor contains `2 vector processing units (VPUs)` or ports
+
+	- Each VPU has `2 Fused Multiply-Add (FMADD)`  	 
+
+	- The SIMD width of the processor is `16`, i.e. its capable of running 16-wide FMADD instructions on each port every cycle
+
+ To calculate the throughput of the machine per core we need to multiply these numbers together i.e. `16 floating point numbers, times two VPUs, times two FMADD, times 2.4 GHz`. The throughput of the processor for `1 core is ~ 157 GFlops`. For 1 socket i.e. 28 cores it is ~ `4300.8 GFlops`.
+
 
 
 
